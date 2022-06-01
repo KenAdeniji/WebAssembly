@@ -1,0 +1,34 @@
+<html>
+<body>
+<label for="bookID">Book ID</label>
+<input id="bookID" type="number" min="1", max="66"/>
+<button class="mybutton">Run getTitle</button>
+<span id="bookTitle"></span>
+<script src="gen/BibleBookInquiry.js"></script>
+<script>
+	document.querySelector('.mybutton')
+		.addEventListener('click', function() {
+			var bookIDElement = document.getElementById("bookID");
+			var bookIDValue = parseInt(bookIDElement.value);
+			var bookTitleElement = document.getElementById("bookTitle");
+			
+			if (bookIDValue < 1 || bookIDValue > 66)
+			{
+				bookTitleElement.textContent = "";
+				return
+			}
+			
+			var result = Module.ccall(
+				'getTitle',	// name of C function 
+				'string',	// return type
+				["number"],	// argument types
+				[	// arguments
+					bookIDValue
+				]
+			);
+			bookTitleElement.textContent = result;
+	});
+</script>
+
+</body>
+</html>
